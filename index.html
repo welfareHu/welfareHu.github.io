@@ -339,6 +339,132 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/16/Java读写中文解决中文乱码问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="welfareHu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="晴●空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/16/Java读写中文解决中文乱码问题/" itemprop="url">Java读写中文解决中文乱码问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-16T23:42:47+08:00">
+                2019-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="下面是关于Java读写中文文件解决中文乱码的问题分析，原因查找，解决思路，及解决方案。"><a href="#下面是关于Java读写中文文件解决中文乱码的问题分析，原因查找，解决思路，及解决方案。" class="headerlink" title="下面是关于Java读写中文文件解决中文乱码的问题分析，原因查找，解决思路，及解决方案。"></a>下面是关于Java读写中文文件解决中文乱码的问题分析，原因查找，解决思路，及解决方案。</h2><h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><p>在用Java程序进行读写含中文的txt文件时，经常会出现读出或写入的内容会出现乱码。</p>
+<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p>其实很简单，就是系统的编码和程序的编码采用了不同的编码格式。通常，假如自己不修改的话，windows自身采用的编码格式是gbk(而gbk和gb2312基本上是一样的编码方式),而IDE中Encode不修改的话，默认是utf-8的编码，这就是为什么会出现乱码的原因。当在OS下手工创建并写入的txt文件（gbk），用程序直接去读（utf-8），就会乱码。为了避免可能的中文乱码问题，最好在文件写入和读出的时候显式指定编码格式。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>可以观察其实windows下的记事本的默认的格式是ANSI,查看方式就是创建一个新的文本文件然后点击另存为，在简体中文Windows操作系统中，ANSI<br>编码代表 GBK 编码，所以win系统的编码方式是gbk,不可以用utf-8去读。</p>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><p>在Java中，如果我们用java.io.FileReader或者<br>java.io.FileWriter来读写文件的话，固然我们可以通过<br>java.io.BufferedReader和java.io.BufferedWriter来提高效率，<br>但是我们会发现在FileReader和<br>FileWriter中我们只能获取编码方式，而不能设置。这样，在FileReader和FileWriter中的编码设置只能服从于一些更为底层的设置，那么在读写多种语言编码的文件时就很容易出现乱码。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>另外一种方法就是采用java.io.FileInputStream/java.io.InputStreamReader和<br>java.io.FileOutputStream/java.io.OutputStreamWriter来解决这个问题。在<br>InputStreamReader和OutputStreamWriter中，可以通过指定编码方式来完成gbk文件的读写。</p>
+<h6 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//默认情况下，win系统编码是gbk/gbk2312,读取和写入时加入编码字符集可以解决乱码  </span><br><span class="line">public class ReadAndWrite &#123;  </span><br><span class="line">    private static void <span class="function"><span class="title">test</span></span>()&#123;  </span><br><span class="line">        File firstFile = new File(<span class="string">"D://fileone.txt"</span>);</span><br><span class="line">        File secondFile=new File(<span class="string">"D://filesecond.txt"</span>);</span><br><span class="line">        BufferedReader <span class="keyword">in</span> = null;  </span><br><span class="line">        BufferedWriter out = null;        </span><br><span class="line">        try &#123;       </span><br><span class="line">            //加入编码字符集   </span><br><span class="line">            <span class="keyword">in</span> = new BufferedReader(new InputStreamReader(new FileInputStream(firstFile), <span class="string">"gbk"</span>));  </span><br><span class="line">            //加入编码字符集  </span><br><span class="line">            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(secondFile), <span class="string">"gbk"</span>));  </span><br><span class="line">            String line = <span class="string">""</span>;  </span><br><span class="line">            <span class="keyword">while</span>((line = in.readLine())!=null)&#123;  </span><br><span class="line">                System.out.println(line);  </span><br><span class="line">                out.write(line+<span class="string">"\r\n"</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; catch (FileNotFoundException e) &#123;  </span><br><span class="line">            System.out.println(<span class="string">"file is not fond"</span>);  </span><br><span class="line">        &#125; catch (IOException e) &#123;  </span><br><span class="line">            System.out.println(<span class="string">"Read or write Exceptioned"</span>);  </span><br><span class="line">        &#125;finally&#123;             </span><br><span class="line">            <span class="keyword">if</span>(null!=<span class="keyword">in</span>)&#123;   </span><br><span class="line">                try &#123;  </span><br><span class="line">                    in.close();  </span><br><span class="line">                &#125; catch (IOException e) &#123;  </span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125;&#125;  </span><br><span class="line">            <span class="keyword">if</span>(null!=out)&#123;  </span><br><span class="line">                try &#123;  </span><br><span class="line">                    out.close();  </span><br><span class="line">                &#125; catch (IOException e) &#123;  </span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125;</span><br><span class="line">           &#125;</span><br><span class="line">     &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件读写的注意点："><a href="#文件读写的注意点：" class="headerlink" title="文件读写的注意点："></a>文件读写的注意点：</h3><p>1.一定要写BufferedWriter out的close方法不然什么都不会被写入文件的！！！<br><br>2.要写入换行时，一定要\r\n,否则无效</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/11/Java空字符串与null的区别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -543,7 +669,7 @@ System.out.println(str1.equals(str3)); //值的比较，返回<span class="liter
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
