@@ -339,6 +339,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/17/限制input输入类型/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="welfareHu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="晴●空">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/17/限制input输入类型/" itemprop="url">限制input输入类型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-17T15:03:00+08:00">
+                2019-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/html/" itemprop="url" rel="index">
+                    <span itemprop="name">html</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="限制input输入类型（多种方法实现）"><a href="#限制input输入类型（多种方法实现）" class="headerlink" title="限制input输入类型（多种方法实现）"></a>限制input输入类型（多种方法实现）</h1><h2 id="1-只能输入和粘贴汉字"><a href="#1-只能输入和粘贴汉字" class="headerlink" title="1.只能输入和粘贴汉字"></a>1.只能输入和粘贴汉字</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[^\u4E00-\u9FA5]/g,'')"</span>  onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"</span>&gt;&lt;br/&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2-只能输入和粘贴数字"><a href="#2-只能输入和粘贴数字" class="headerlink" title="2.只能输入和粘贴数字"></a>2.只能输入和粘贴数字</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup=<span class="string">"this.value=this.value.replace(/\D/g,'')"</span>  onafterpaste=<span class="string">"this.value=this.value.replace(/\D/g,'')"</span> /&gt;&lt;br/&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 3.数字脚本 </span></span><br><span class="line">``` bash </span><br><span class="line">&lt;input onkeyup=<span class="string">"if(/\D/.test(this.value))&#123;alert('只能输入数字');this.value='';&#125;"</span>&gt;&lt;br/&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 4.只能输入数字和英文 </span></span><br><span class="line">``` bash </span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[\W]/g,'') "</span>  onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"</span>&gt;&lt;br/&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 5.简易禁止输入汉字 </span></span><br><span class="line">``` bash </span><br><span class="line">&lt;input style=<span class="string">"ime-mode:disabled"</span>&gt;输入法不转换，但可粘贴上&lt;br/&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 6.输入数字和小数点 </span></span><br><span class="line">``` bash </span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[^\d&#123;1,&#125;\.\d&#123;1,&#125;|\d&#123;1,&#125;]/g,'')"</span>  /&gt;&lt;br/&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="7-只能数字和”-“-例如在输入时间的时候可以用到"><a href="#7-只能数字和”-“-例如在输入时间的时候可以用到" class="headerlink" title="7.只能数字和”-“,例如在输入时间的时候可以用到"></a>7.只能数字和”-“,例如在输入时间的时候可以用到</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[^\w&amp;=]|_/ig,'')"</span>  onblur=<span class="string">"value=value.replace(/[^\w&amp;-]|_/ig,'')"</span> /&gt;</span><br><span class="line">``` </span><br><span class="line">JS控制 input 输入字符限制 </span><br><span class="line"></span><br><span class="line">ENTER键可以让光标移到下一个输入框 </span><br><span class="line">代码如下:</span><br><span class="line">``` bash </span><br><span class="line">&lt;input onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span> &gt; 只能是中文</span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[ -~]/g,'')"</span> onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span>&gt; 屏蔽输入法 &lt;input style=<span class="string">"ime-mode:disabled"</span> onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span>&gt; 只能输入英文和数字</span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[/W]/g,'') "</span>onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[^/d]/g,''))"</span> onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span>&gt; 只能是数字</span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[^/d]/g,'') "</span>onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[^/d]/g,''))"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"> </span><br><span class="line">只能显示，不能修改 </span><br><span class="line">代码如下:</span><br><span class="line">``` bash </span><br><span class="line">&lt;input <span class="built_in">readonly</span> value=<span class="string">"只能显示，不能修改"</span>&gt;只能输数字，判断按键的值</span><br><span class="line">&lt;script language=javascript&gt;</span><br><span class="line"><span class="keyword">function</span> onlyNum()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(!((event.keyCode&gt;=48&amp;&amp;event.keyCode&lt;=57)||(event.keyCode&gt;=96&amp;&amp;event.keyCode&lt;=105)||(event.keyCode==8)))</span><br><span class="line">event.returnValue=<span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;input onkeydown=<span class="string">"onlyNum();"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 1.文本框只能输入数字代码(小数点也不能输入) </span></span><br><span class="line">```bash</span><br><span class="line">&lt;input onkeyup=<span class="string">"this.value=this.value.replace(//D/g,'')"</span>  onafterpaste=<span class="string">"this.value=this.value.replace(//D/g,'')"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 2.只能输入数字,能输小数点. </span></span><br><span class="line">``` bash </span><br><span class="line">&lt;input onkeyup=<span class="string">"if(isNaN(value))execCommand('undo')"</span>  onafterpaste=<span class="string">"if(isNaN(value))execCommand('undo')"</span>&gt;</span><br><span class="line">&lt;input name=txt1 onchange=<span class="string">"if(//D/.test(this.value))&#123;alert('只能输入数字');this.value='';&#125;"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 3.数字和小数点方法二 </span></span><br><span class="line">代码如下:</span><br><span class="line">``` bash </span><br><span class="line">&lt;input <span class="built_in">type</span>=text t_value=<span class="string">""</span> o_value=<span class="string">""</span> onkeypress=<span class="string">"if(!this.value.match(/^[/+/-]?/d*?/.?/d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[/+/-]?/d+(?:/./d+)?)?$/))this.o_value=this.value"</span> onkeyup=<span class="string">"if(!this.value.match(/^[/+/-]?/d*?/.?/d*?$/))this.value=this.t_value;else this.t_value=this.value;if(this.value.match(/^(?:[/+/-]?/d+(?:/./d+)?)?$/))this.o_value=this.value"</span> onblur=<span class="string">"if(!this.value.match(/^(?:[/+/-]?/d+(?:/./d+)?|/./d*?)?$/))this.value=this.o_value;else&#123;if(this.value.match(/^/./d+$/))this.value=0+this.value;if(this.value.match(/^/.$/))this.value=0;this.o_value=this.value&#125;"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">## 4.只能输入字母和汉字 </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[/d]/g,'')  "</span>onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[/d]/g,''))"</span> maxlength=10 name=<span class="string">"Numbers"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 5.只能输入英文字母和数字,不能输入中文 </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input onkeyup=<span class="string">"value=value.replace(/[^/w/.//]/ig,'')"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 6.只能输入数字和英文 </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;font color=<span class="string">"Red"</span>&gt;chun&lt;/font&gt;</span><br><span class="line">&lt;input onKeyUp=<span class="string">"value=value.replace(/[^/d|chun]/g,'')"</span>&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="7-小数点后只能有最多两位-数字-中文都可输入-不能输入字母和运算符号"><a href="#7-小数点后只能有最多两位-数字-中文都可输入-不能输入字母和运算符号" class="headerlink" title="7.小数点后只能有最多两位(数字,中文都可输入),不能输入字母和运算符号:"></a>7.小数点后只能有最多两位(数字,中文都可输入),不能输入字母和运算符号:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input  onKeyPress=<span class="string">"if((event.keyCode&lt;48 || event.keyCode&gt;57) &amp;&amp;  event.keyCode!=46 || //./d/d$/.test(value))event.returnValue=false"</span>&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">## 8.小数点后只能有最多两位(数字,字母,中文都可输入),可以输入运算符号: </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input  onkeyup=<span class="string">"this.value=this.value.replace(/^(/-)*(/d+)/.(/d/d).*$/,'<span class="variable">$1</span><span class="variable">$2</span>.<span class="variable">$3</span>')"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>只能是数字和小数点和加减乘際 </p>
+<h2 id="9-只能输入数字、小数点、负数"><a href="#9-只能输入数字、小数点、负数" class="headerlink" title="9.只能输入数字、小数点、负数"></a>9.只能输入数字、小数点、负数</h2><p>代码如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name=<span class="string">"input"</span> <span class="built_in">type</span>=<span class="string">"text"</span> onkeyup=<span class="string">"JHshNumberText(this)"</span> id=<span class="string">"title"</span>&gt;</span><br><span class="line">&lt;script language=<span class="string">"javascript"</span> <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;<span class="keyword">function</span> JHshNumberText(a)</span><br><span class="line">&#123;</span><br><span class="line">var fa=<span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span>(a.value.substring(0,1)==<span class="string">"-"</span>)</span><br><span class="line">fa=<span class="string">"-"</span>;</span><br><span class="line">var str=(a.value.replace(/[^0-9.]/g,<span class="string">''</span>)).replace(/[.][0-9]*[.]/, <span class="string">'.'</span>);</span><br><span class="line"><span class="keyword">if</span> (str.substring(0,1)==<span class="string">"."</span>)</span><br><span class="line">``` </span><br><span class="line"><span class="comment"># 限制input输入类型(多种方法实现)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 1.取消按钮按下时的虚线框,在input里添加属性值 hideFocus 或者 HideFocus=true </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">"submit"</span> value=<span class="string">"提交"</span> hidefocus=<span class="string">"true"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-只读文本框内容-在input里添加属性值-readonly"><a href="#2-只读文本框内容-在input里添加属性值-readonly" class="headerlink" title="2.只读文本框内容,在input里添加属性值 readonly"></a>2.只读文本框内容,在input里添加属性值 readonly</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> <span class="built_in">readonly</span> /&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">### 3.防止退后清空的TEXT文档(可把style内容做做为类引用) </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> style=<span class="string">"behavior:url(#default#savehistory);"</span> /&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">### 4.ENTER键可以让光标移到下一个输入框 </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span> /&gt;</span><br><span class="line">``` </span><br><span class="line"><span class="comment">### 5.只能为中文(有闪动) </span></span><br><span class="line">``` bash</span><br><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> onkeyup=<span class="string">"value=value.replace(/[ -~]/g,'')"</span>  onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="6-只能为数字-有闪动"><a href="#6-只能为数字-有闪动" class="headerlink" title="6.只能为数字(有闪动)"></a>6.只能为数字(有闪动)</h3><pre><code class="bash">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> onkeyup=<span class="string">"value=value.replace(/[^/d]/g,'') "</span>  onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[^/d]/g,''))"</span> /&gt;
+</code></pre>
+<h3 id="7-只能为数字-无闪动"><a href="#7-只能为数字-无闪动" class="headerlink" title="7.只能为数字(无闪动)"></a>7.只能为数字(无闪动)</h3><pre><code class="bash">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> style=<span class="string">"ime-mode:disabled"</span>  onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span> onkeypress=<span class="string">"if  ((event.keyCode&lt;48 || event.keyCode&gt;57)) event.returnValue=false"</span> /&gt;
+</code></pre>
+<h3 id="8-只能输入英文和数字-有闪动"><a href="#8-只能输入英文和数字-有闪动" class="headerlink" title="8.只能输入英文和数字(有闪动)"></a>8.只能输入英文和数字(有闪动)</h3><pre><code class="bash">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> onkeyup=<span class="string">"value=value.replace(/[/W]/g,'')"</span>  onbeforepaste=<span class="string">"clipboardData.setData('text',clipboardData.getData('text').replace(/[^/d]/g,''))"</span> /&gt;
+</code></pre>
+<h3 id="9-屏蔽输入法"><a href="#9-屏蔽输入法" class="headerlink" title="9.屏蔽输入法"></a>9.屏蔽输入法</h3><pre><code class="bash">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"url"</span> style=<span class="string">"ime-mode:disabled"</span>  onkeydown=<span class="string">"if(event.keyCode==13)event.keyCode=9"</span> /&gt;
+</code></pre>
+<h3 id="10-只能输入-数字，小数点，减号（-）-字符-无闪动"><a href="#10-只能输入-数字，小数点，减号（-）-字符-无闪动" class="headerlink" title="10. 只能输入 数字，小数点，减号（-） 字符(无闪动)"></a>10. 只能输入 数字，小数点，减号（-） 字符(无闪动)</h3><pre><code class="bash">&lt;input onkeypress=<span class="string">"if (event.keyCode!=46 &amp;&amp; event.keyCode!=45 &amp;&amp;  (event.keyCode&lt;48 || event.keyCode&gt;57)) event.returnValue=false"</span> /&gt;
+</code></pre>
+<h3 id="11-只能输入两位小数，三位小数-有闪动"><a href="#11-只能输入两位小数，三位小数-有闪动" class="headerlink" title="11. 只能输入两位小数，三位小数(有闪动)"></a>11. 只能输入两位小数，三位小数(有闪动)</h3><pre><code class="bash">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> maxlength=<span class="string">"9"</span>  onkeyup=<span class="string">"if(value.match(/^/d{3}$/))value=value.replace(value,parseInt(value/10)) ;value=value.replace(//./d*/./g,'.')"</span> onkeypress=<span class="string">"if((event.keyCode&lt;48  || event.keyCode&gt;57) &amp;&amp; event.keyCode!=46 &amp;&amp; event.keyCode!=45 ||  value.match(/^/d{3}$/) || //./d{3}$/.test(value)) {event.returnValue=false}"</span>  /&gt;
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/16/Java读写中文解决中文乱码问题/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -691,7 +851,7 @@ System.out.println(str1.equals(str3)); //值的比较，返回<span class="liter
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -702,7 +862,7 @@ System.out.println(str1.equals(str3)); //值的比较，返回<span class="liter
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -713,7 +873,7 @@ System.out.println(str1.equals(str3)); //值的比较，返回<span class="liter
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
