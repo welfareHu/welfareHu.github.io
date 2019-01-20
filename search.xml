@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[识别phone/PC]]></title>
+    <url>%2F2019%2F01%2F20%2F%E8%AF%86%E5%88%ABphone-PC%2F</url>
+    <content type="text"><![CDATA[如何让你的页面识别访问是来自手机还是电脑JavaScript代码如下：1234567891011try&#123; if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent))&#123; window.location.href = "这里填写要跳转的手机网页地址" //地址可以是相对路径或绝对路径 &#125;else&#123; window.location.href = "这里填写要跳转的电脑网页地址" //地址可以是相对路径或绝对路径 &#125;&#125; catch(e)&#123;&#125; 代码放在index.html文件里，而且只放JavaScript代码。还没发现在哪些手机不能识别此代码，发现之后再补充]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[JS日期格式化]]></title>
     <url>%2F2019%2F01%2F20%2FJS%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%2F</url>
     <content type="text"><![CDATA[时间格式化处理dateFtt(“yyyy-MM-dd hh:mm:ss”,new Date() );12345678910111213141516171819/直接调用公共JS里面的时间类处理的办法function dateFtt(fmt,date) &#123; //author: welfareHu var o = &#123; "M+" : date.getMonth()+1, //月份 "d+" : date.getDate(), //日 "h+" : date.getHours(), //小时 "m+" : date.getMinutes(), //分 "s+" : date.getSeconds(), //秒 "q+" : Math.floor((date.getMonth()+3)/3), //季度 "S" : date.getMilliseconds() //毫秒 &#125;; if(/(y+)/.test(fmt)) fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length)); for(var k in o) if(new RegExp("("+ k +")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length))); return fmt; &#125;]]></content>
